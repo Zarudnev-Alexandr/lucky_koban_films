@@ -1,0 +1,29 @@
+a, p, li{
+  color: #fff;
+  font-size: 16px;
+}
+
+.container{
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.slick-arrow{
+  &::before{
+    content: '';
+  }
+}
+
+
+
+.slider-prev__img{
+  transform: scale(-1, -1);
+}
+
+// .slick-prev{
+//   .slick-arrow{
+//     display: none !important;
+//   }
+// }
+

@@ -1,0 +1,7 @@
+
+}python:S1192¹"dDefine a constant instead of duplicating this literal '%(app_label)s.change_%(model_name)s' 4 times.(ÈŸÛÛ
+Lpython:S1172m"/Remove the unused function parameter "request".(¶«Äûÿÿÿÿ
+Ipython:S1172m",Remove the unused function parameter "view".(¶«Äûÿÿÿÿ
+Hpython:S1172s"+Remove the unused function parameter "obj".(–Š£…şÿÿÿÿ
+Ipython:S1172s",Remove the unused function parameter "view".(–Š£…şÿÿÿÿ
+Lpython:S1172s"/Remove the unused function parameter "request".(–Š£…şÿÿÿÿ

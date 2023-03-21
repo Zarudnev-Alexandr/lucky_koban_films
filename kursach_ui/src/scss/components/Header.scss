@@ -1,0 +1,27 @@
+.header {
+  background-color: $bg-color;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  &__list {
+    display: flex;
+  }
+
+  &__list-item+.header__list-item {
+    margin-left: 100px;
+  }
+
+  &__logo-box {
+    max-width: 60px;
+  }
+
+  &__list-item__link,
+  .header__auth {
+    @extend %link;
+  }
+}

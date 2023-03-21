@@ -1,0 +1,107 @@
+.slick-arrow::before {
+  color: #000;
+}
+
+.MainPage {
+  background-color: $bg-color;
+
+  &__title {
+    color: #fff;
+    font-size: 40px;
+    padding-bottom: 20px;
+  }
+
+  &__slider {
+    padding-top: 20px;
+    padding-bottom: 50px;
+  }
+
+  &__slider-item {
+    height: 350px;
+    position: relative;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+  }
+
+  &__slider-img {
+    position: absolute;
+    z-index: -1;
+    transform: translateY(30%);
+  }
+
+  &__slider-item__content-box__info {
+    padding-left: 50px;
+    max-width: 700px;
+    padding-bottom: 30px;
+    text-shadow: 1px 1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
+  }
+
+  &__slider-item__title {
+    color: #fff;
+    font-size: 55px;
+    margin-bottom: 10px;
+  }
+
+  &__slider-item__descr {
+    margin-bottom: 15px;
+
+  }
+
+  &__slider-item__rating {
+    padding-right: 20px;
+    padding-bottom: 20px;
+  }
+
+  &__topFilms-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 220px);
+    grid-column-gap: 10px;
+    grid-row-gap: 25px;
+    place-items: center;
+    padding-bottom: 30px;
+  }
+
+  &__topFilms-card {
+    width: 200px;
+    max-height: 220px;
+    &:hover{
+      transform: translateY(-10px);
+      transition: all .3s;
+    }
+  }
+
+  &__topFilms-card__img{
+    height: 113px;
+    margin: 0;
+  }
+
+  &__topFilms-card__content{
+    margin-top: 10px;
+    color: #fff;
+  }
+
+  &__topFilms-card__title{
+    font-size: 16px;
+    margin-bottom: 7px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__topFilms-card__addInfo{
+    display: flex;
+    align-items: center;
+    p{
+      font-size: 14px;
+    }    
+  }
+
+  &__topFilms-card__starSvg{
+    transform: translateY(2px);
+    margin-right: 5px;
+  }
+
+
+}
