@@ -2,7 +2,14 @@ import Layout from '../components/Layout'
 import Slider from "react-slick";
 import Poster2 from '../images/poster2.jpeg'
 import SliderArrow from '../images/arrow-slider.svg'
+import { useState } from 'react';
+import { useEffect } from 'react';
 const Film = () => {
+
+  useEffect(() => {
+    fetchFilm()
+  }, []
+  )
 
   let cardStarSvg = () => {
     return (
@@ -26,87 +33,113 @@ const Film = () => {
     nextArrow: <button id="next" type="button" class="slick-arrow slider-arrow slider-next"><img src={SliderArrow} /></button>
   };
 
+  let [film, setFilm] = useState()
+
+  let fetchFilm = () => {
+    fetch('https://4947.ru/lucky_koban_films/api/films/' + localStorage.getItem('film_id'))
+      .then(response => response.json())
+      .then(data => {
+        let result = data;
+        setFilm(result)
+      })
+  }
+
   return (
     <>
-      <div className="FilmPage">
-        <Layout title='Lucky Kobsn Films | Фильм' content='Film page'>
-          <section className="FilmPage__general">
-            <img className="FilmPage__general-img" src={Poster2} alt="Film poster image" />
-            <div className="container">
-              <div className="FilmPage__general-content__wrapper">
-                <div className="FilmPage__general-content">
-                  <h2 className="FilmPage__general-content__title">Драйв</h2>
-                  <p className="FilmPage__general-content__descr">Великолепный водитель – при свете дня он выполняет каскадерские трюки на съёмочных площадках Голливуда, а по ночам ведет рискованную игру. Но один опасный контракт – и за его жизнь назначена награда. Теперь, чтобы остаться в живых и спасти свою очаровательную соседку, он должен делать то, что умеет лучше всего – виртуозно уходить от погони.</p>
-                  <ui className="FilmPage__general-content__list">
-                    <li className="FilmPage__general-content__list-item">2011 |</li>
-                    <li className="FilmPage__general-content__list-item"> 1ч 20мин |</li>
-                    <li className="FilmPage__general-content__list-item"> США |</li>
-                    <li className="FilmPage__general-content__list-item"> преступление драма триллер |</li>
-                    <li className="FilmPage__general-content__list-item"> 18+ |</li>
-                    <li className="FilmPage__general-content__list-item"> 7 {cardStarSvg()}</li>
-                  </ui>
+      {film ? (
+        <div className="FilmPage">
+          <Layout title='Lucky Kobsn Films | Фильм' content='Film page'>
+            <section className="FilmPage__general">
+              <img className="FilmPage__general-img" src={"https://4947.ru/lucky_koban_films/images/" + film.id + ".jpg"} alt="Film poster image" />
+              <div className="container">
+                <div className="FilmPage__general-content__wrapper">
+                  <div className="FilmPage__general-content">
+                    <h2 className="FilmPage__general-content__title">{film.name}</h2>
+                    <p className="FilmPage__general-content__descr">{film.description}</p>
+                    <ui className="FilmPage__general-content__list">
+                      <li className="FilmPage__general-content__list-item">{String(film.release_date).split('-')[2]}.{String(film.release_date).split('-')[1]}.{String(film.release_date).split('-')[0]} |</li>
+                      {/* <li className="FilmPage__general-content__list-item"> 1ч 20мин |</li>
+                      <li className="FilmPage__general-content__list-item"> США |</li> */}
+                      <li className="FilmPage__general-content__list-item"> {film.genres.map((item1) => {
+                        return (
+                          <>
+                            {item1.name + " "}
+                          </>
+                        )
+                      })} |</li>
+                      <li className="FilmPage__general-content__list-item"> {film.age_rating}+ |</li>
+                      <li className="FilmPage__general-content__list-item"> {film.rating} {cardStarSvg()}</li>
+                    </ui>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section className="FilmPage__other">
-            <div className="FilmPage__other-inner">
-              <div className="FilmPage__other-box">
-                <div className="container">
-                  <h5 className="FilmPage__other-title">Актеры</h5>
-                  <Slider className="FilmPage__other-actors__list" {...sliderSettings}>
-                    <a className="FilmPage__other-actors__list-item">
-                      Райан Гослинг
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Кэри Маллиган
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Брайан Крэнстон
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Альберт Брукс
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Оскар Айзек
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Кристина Хендрикс
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Рон Перлман
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Расс Тэмблин
-                    </a>
-                    <a className="FilmPage__other-actors__list-item">
-                      Джефф Вульф
-                    </a>
+            <section className="FilmPage__other">
+              <div className="FilmPage__other-inner">
+                <div className="FilmPage__other-box">
+                  <div className="container">
+                    <h5 className="FilmPage__other-title">Актеры</h5>
+                    <Slider className="FilmPage__other-actors__list" {...sliderSettings}>
+                      {film.actors.map((item) => {
+                        return (
+                          <a className="FilmPage__other-actors__list-item">
+                            {item.first_name} {item.last_name}
+                          </a>
+                        )
+                      })}
+                      {/* <a className="FilmPage__other-actors__list-item">
+                        Кэри Маллиган
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Брайан Крэнстон
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Альберт Брукс
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Оскар Айзек
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Кристина Хендрикс
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Рон Перлман
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Расс Тэмблин
+                      </a>
+                      <a className="FilmPage__other-actors__list-item">
+                        Джефф Вульф
+                      </a> */}
 
-                  </Slider>
+                    </Slider>
+                  </div>
                 </div>
-              </div>
 
-              <div className="FilmPage__other-box">
-                <div className="container">
-                  <div className="FilmPage__other-details">
-                    <h5 className="FilmPage__other-title">Детали</h5>
-                    <div className="FilmPage__other-genres">
-                      <h6 className="FilmPage__other-dop__tile">Жанры: </h6>
-                      <ul className="FilmPage__other-details__list">
-                        <li className="FilmPage__other-details__list-item">преступление</li>
-                        <li className="FilmPage__other-details__list-item">драма</li>
-                        <li className="FilmPage__other-details__list-item">триллер</li>
-                      </ul>
+                <div className="FilmPage__other-box">
+                  <div className="container">
+                    <div className="FilmPage__other-details">
+                      <h5 className="FilmPage__other-title">Детали</h5>
+                      <div className="FilmPage__other-genres">
+                        <h6 className="FilmPage__other-dop__tile">Жанры: </h6>
+                        <ul className="FilmPage__other-details__list">
+                          {film.genres.map((item)=>{
+                            return(
+                              <li className="FilmPage__other-details__list-item">{item.name}</li>
+                            )
+                          })}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </Layout>
-      </div>
+            </section>
+          </Layout>
+        </div>
+      ) : ('')}
+
     </>
   )
 }

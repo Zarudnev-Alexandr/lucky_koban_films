@@ -1,7 +1,8 @@
 import Layout from '../components/Layout'
-import React from "react";
+import { React, useState, useEffect } from "react";
 import Slider from "react-slick";
 import SliderArrow from '../images/arrow-slider.svg'
+import Film from './Film';
 import Poster2 from '../images/poster2.jpeg'
 import Poster3 from '../images/poster3.jpg'
 import Poster4 from '../images/poster4.jpg'
@@ -9,6 +10,22 @@ import Poster5 from '../images/poster5.jpeg'
 import Poster6 from '../images/poster6.jpeg'
 
 const Main = () => {
+
+  useEffect(() => {
+    fetchAllFilms()
+  }, [])
+
+  let [allFilms, setAllFilms] = useState([]);
+
+  let fetchAllFilms = () => {
+    fetch('https://4947.ru/lucky_koban_films/api/films/')
+      .then(response => response.json())
+      .then(data => {
+        let result = data;
+        setAllFilms(result)
+      })
+  }
+
   let sliderSettings = {
     dots: false,
     arrows: true,
@@ -16,11 +33,11 @@ const Main = () => {
     speed: 500,
     autoplay: true,
     infinite: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <button id="prev" type="button" class="slick-arrow slider-arrow slider-prev"><img className='slider-prev__img' src={SliderArrow} /></button>,
-    nextArrow: <button id="next" type="button" class="slick-arrow slider-arrow slider-next"><img src={SliderArrow} /></button>
+    prevArrow: <button id="prev" type="button" className="slick-arrow slider-arrow slider-prev"><img className='slider-prev__img' src={SliderArrow} /></button>,
+    nextArrow: <button id="next" type="button" className="slick-arrow slider-arrow slider-next"><img src={SliderArrow} /></button>
   };
 
   let cardStarSvg = () => {
@@ -30,24 +47,41 @@ const Main = () => {
       </svg>
     )
   }
+
+
+
   return (
     <>
       <Layout title='Lucky Kobsn Films | Главная' content='Main page'>
         <section className="MainPage">
           <div className="container">
             <Slider className='MainPage__slider' {...sliderSettings}>
-              <div className="MainPage__slider-item">
-                <img src={Poster2} alt="" className="MainPage__slider-img" />
-                <div className="MainPage__slider-item__content-box__info">
-                  <h3 className="MainPage__slider-item__title">Драйв</h3>
-                  <p className="MainPage__slider-item__descr">Великолепный водитель – при свете дня он выполняет каскадерские трюки на съёмочных площадках Голливуда, а по ночам ведет рискованную игру. Но один опасный контракт – и за его жизнь назначена награда. Теперь, чтобы остаться в живых и спасти свою очаровательную соседку, он должен делать то, что умеет лучше всего – виртуозно уходить от погони.</p>
-                  <div className="MainPage__slider-item__add-box">
-                    <p className="MainPage__slider-item__year">2011 | преступление драма триллер</p>
-                  </div>
-                </div>
-                <p className="MainPage__slider-item__rating">18+</p>
-              </div>
-              <div className="MainPage__slider-item">
+              {allFilms.map((item) => {
+                return (
+                  <a href='/Film' onClick={() => localStorage.setItem("film_id", item.id)}>
+                    <div className="MainPage__slider-item">
+                      <img src={"https://4947.ru/lucky_koban_films/images/" + item.id + ".jpg"} alt="" className="MainPage__slider-img" />
+                      <div className="MainPage__slider-item__content-box__info">
+                        <h3 className="MainPage__slider-item__title">{item.name}</h3>
+                        <p className="MainPage__slider-item__descr">{item.description}</p>
+                        <div className="MainPage__slider-item__add-box">
+                          <p className="MainPage__slider-item__year">{String(item.release_date).split('-')[2]}.{String(item.release_date).split('-')[1]}.{String(item.release_date).split('-')[0]} | {item.genres.map((item1) => {
+                            console.log(item1);
+                            return (
+                              <>
+                                {item1.name + " "}
+                              </>
+                            )
+                          })}</p>
+                        </div>
+                      </div>
+                      <p className="MainPage__slider-item__rating">{item.age_rating}+</p>
+                    </div>
+                  </a>
+                )
+              })}
+
+              {/* <div className="MainPage__slider-item">
                 <img src={Poster3} alt="" className="MainPage__slider-img" />
                 <div className="MainPage__slider-item__content-box__info">
                   <h3 className="MainPage__slider-item__title">Волк с Уолл-стрит</h3>
@@ -79,29 +113,34 @@ const Main = () => {
                   </div>
                 </div>
                 <p className="MainPage__slider-item__rating">16+</p>
-              </div>
+              </div> */}
             </Slider>
 
             <div className="MainPage__topFilms">
               <h3 className="MainPage__title">Топ фильмов</h3>
               <div className="MainPage__topFilms-cards">
 
-                <div className="MainPage__topFilms-card">
-                  <a href="#" className="MainPage__topFilms-card__link">
-                    <img src={Poster2} alt="" className="MainPage__topFilms-card__img" />
-                    <div className="MainPage__topFilms-card__content">
-                      <h6 className="MainPage__topFilms-card__title">Драйв</h6>
-                      <div className="MainPage__topFilms-card__addInfo">
-                        <p className="MainPage__topFilms-card__rating">
-                          8.5
-                          {cardStarSvg()}
-                        </p>
-                        <p className="MainPage__topFilms-card__year">/ 2011</p>
-                      </div>
+
+                {allFilms.map((item) => {
+                  return (
+                    <div className="MainPage__topFilms-card">
+                      <a href="/film" onClick={() => localStorage.setItem("film_id", item.id)} className="MainPage__topFilms-card__link">
+                        <img src={"https://4947.ru/lucky_koban_films/images/" + item.id + ".jpg"} alt="" className="MainPage__topFilms-card__img" />
+                        <div className="MainPage__topFilms-card__content">
+                          <h6 className="MainPage__topFilms-card__title">{item.name}</h6>
+                          <div className="MainPage__topFilms-card__addInfo">
+                            <p className="MainPage__topFilms-card__rating">
+                              {item.rating}
+                              {cardStarSvg()}
+                            </p>
+                            <p className="MainPage__topFilms-card__year">/ {String(item.release_date).split('-')[2]}.{String(item.release_date).split('-')[1]}.{String(item.release_date).split('-')[0]}</p>
+                          </div>
+                        </div>
+                      </a>
                     </div>
-                  </a>
-                </div>
-                <div className="MainPage__topFilms-card">
+                  )
+                })}
+                {/* <div className="MainPage__topFilms-card">
                   <a href="#" className="MainPage__topFilms-card__link">
                     <img src={Poster3} alt="" className="MainPage__topFilms-card__img" />
                     <div className="MainPage__topFilms-card__content">
@@ -175,7 +214,7 @@ const Main = () => {
                       </div>
                     </div>
                   </a>
-                </div>
+                </div> */}
 
               </div>
             </div>
