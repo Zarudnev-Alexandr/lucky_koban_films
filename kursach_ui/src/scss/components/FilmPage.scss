@@ -64,6 +64,10 @@
     padding-bottom: 30px;
   }
 
+  &__other-box {
+    padding-bottom: 60px;
+  }
+
   &__other-title {
     padding-top: 30px;
     font-size: 30px;
@@ -75,12 +79,12 @@
     margin-bottom: 30px;
   }
 
-  &__other-genres{
+  &__other-genres {
     display: flex;
     align-items: center;
   }
 
-  &__other-dop__tile{
+  &__other-dop__tile {
     font-size: 20px;
     margin-right: 30px;
   }
@@ -93,9 +97,99 @@
     }
   }
 
-  &__other-details__list-item{
+  &__other-details__list-item {
     background-color: $bg-color-2;
     padding: 6px 16px;
     border-radius: 100px;
+  }
+
+  &__comments-list__item {
+    max-width: 800px;
+    padding: 10px 20px;
+    border: 2px solid #122840;
+    border-radius: 5px;
+
+    &+& {
+      margin-top: 20px;
+    }
+  }
+
+  &__comments-list__item-topbox {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+
+  &__comments-list__item-title {
+    margin-right: 20px;
+  }
+
+  &__comments-list__item-role {
+    color: rgba($color: #fff, $alpha: 0.5);
+  }
+
+  &__comments-list__item-rating {
+    margin-bottom: 10px;
+  }
+
+  &__comments-alert {
+    color: rgba($color: #fff, $alpha: 0.5);
+    margin-bottom: 20px;
+  }
+
+  &__writeComment {
+    margin-bottom: 20px;
+  }
+
+  &__comments-list__item-ratebox {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border: 2px solid #122840;
+    border-radius: 3px;
+    color: #fff;
+    padding: 3px 5px;
+    margin-right: 5px;
+  }
+
+  &__comments-list__item-ratebox option {
+    background-color: $bg-color;
+  }
+
+  &__writeComment-top {
+    display: flex;
+    align-items: center;
+
+    .FilmPage__comments-alert {
+      margin-bottom: 0;
+      line-height: 0;
+      margin-right: 10px;
+    }
+
+    .MainPage__topFilms-card__starSvg {
+      transform: translateY(-0.0px)
+    }
+  }
+
+  &__writeComment-textarea {
+    margin-top: 15px;
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid #122840;
+    resize: none;
+    outline: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    &::placeholder {
+      color: rgba($color: #fff, $alpha: 0.5);
+    }
+  }
+
+  &__comments-btn {
+    width: 200px;
   }
 }

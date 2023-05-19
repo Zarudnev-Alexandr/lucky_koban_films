@@ -80,40 +80,6 @@ const Main = () => {
                   </a>
                 )
               })}
-
-              {/* <div className="MainPage__slider-item">
-                <img src={Poster3} alt="" className="MainPage__slider-img" />
-                <div className="MainPage__slider-item__content-box__info">
-                  <h3 className="MainPage__slider-item__title">Волк с Уолл-стрит</h3>
-                  <p className="MainPage__slider-item__descr">1987 год. Джордан Белфорт становится брокером в успешном инвестиционном банке. Вскоре банк закрывается после внезапного обвала индекса Доу-Джонса. По совету жены Терезы Джордан устраивается в небольшое заведение, занимающееся мелкими акциями. Его настойчивый стиль общения с клиентами и врождённая харизма быстро даёт свои плоды.</p>
-                  <div className="MainPage__slider-item__add-box">
-                    <p className="MainPage__slider-item__year">2013 | драма преступление биография комедия</p>
-                  </div>
-                </div>
-                <p className="MainPage__slider-item__rating">18+</p>
-              </div>
-              <div className="MainPage__slider-item">
-                <img src={Poster4} alt="" className="MainPage__slider-img" />
-                <div className="MainPage__slider-item__content-box__info">
-                  <h3 className="MainPage__slider-item__title">Интерстеллар</h3>
-                  <p className="MainPage__slider-item__descr">Когда засуха, пыльные бури и вымирание растений приводят человечество к продовольственному кризису, коллектив исследователей и учёных отправляется сквозь червоточину (которая предположительно соединяет области пространства-времени через большое расстояние) в путешествие, чтобы превзойти прежние ограничения для космических путешествий человека и найти планету с подходящими для человечества условиями.</p>
-                  <div className="MainPage__slider-item__add-box">
-                    <p className="MainPage__slider-item__year">2014 | фантастика драма приключения</p>
-                  </div>
-                </div>
-                <p className="MainPage__slider-item__rating">16+</p>
-              </div>
-              <div className="MainPage__slider-item">
-                <img src={Poster6} alt="" className="MainPage__slider-img" />
-                <div className="MainPage__slider-item__content-box__info">
-                  <h3 className="MainPage__slider-item__title">Хатико: Самый верный друг</h3>
-                  <p className="MainPage__slider-item__descr">В основе сюжета - реальная история, случившаяся в Японии и потрясшая весь мир. Однажды, возвращаясь с работы, профессор колледжа нашел на вокзале симпатичного щенка породы акита-ину. Профессор и Хатико стали верными друзьями. Каждый день пес провожал и встречал Профессора на вокзале. И даже потеря хозяина не остановила пса в его надежде, что друг вернется.</p>
-                  <div className="MainPage__slider-item__add-box">
-                    <p className="MainPage__slider-item__year">2009 | драма семейный биография</p>
-                  </div>
-                </div>
-                <p className="MainPage__slider-item__rating">16+</p>
-              </div> */}
             </Slider>
 
             <div className="MainPage__topFilms">

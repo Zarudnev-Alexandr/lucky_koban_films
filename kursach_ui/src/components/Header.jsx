@@ -1,4 +1,12 @@
+
 const Header = () => {
+
+  let clearLocalStorage = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user_id');
+  }
+
   return (
     <header className="header">
       <div className="container">
@@ -22,7 +30,13 @@ const Header = () => {
               <a href="#" className="header__list-item__link">Сериалы</a>
             </li>
           </ui>
-          <a href="#" className="header__auth">Вход</a>
+          {localStorage.getItem('token') ? (
+            <a href="#" className="header__auth" onClick={() => (clearLocalStorage(), window.location.reload())}>Выход</a>
+          ) : (
+            <>
+              <a href="/login" className="header__auth">Вход</a>
+            </>
+          )}
         </div>
       </div>
     </header>

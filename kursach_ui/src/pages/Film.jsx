@@ -2,14 +2,16 @@ import Layout from '../components/Layout'
 import Slider from "react-slick";
 import Poster2 from '../images/poster2.jpeg'
 import SliderArrow from '../images/arrow-slider.svg'
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 const Film = () => {
 
   useEffect(() => {
-    fetchFilm()
-  }, []
-  )
+    fetchFilm();
+    fetchComments()
+  }, [])
+
+  const { handleSubmit, reset } = useForm({ mode: 'onBlur' });
 
   let cardStarSvg = () => {
     return (
@@ -33,7 +35,10 @@ const Film = () => {
     nextArrow: <button id="next" type="button" class="slick-arrow slider-arrow slider-next"><img src={SliderArrow} /></button>
   };
 
-  let [film, setFilm] = useState()
+  let [film, setFilm] = useState();
+  let [comments, setComments] = useState([]);
+  let [commentText, setCommentText] = useState('');
+  let [commentRating, setCommentRating] = useState(5);
 
   let fetchFilm = () => {
     fetch('https://4947.ru/lucky_koban_films/api/films/' + localStorage.getItem('film_id'))
@@ -42,6 +47,36 @@ const Film = () => {
         let result = data;
         setFilm(result)
       })
+  }
+
+  let fetchComments = () => {
+    fetch('https://4947.ru/lucky_koban_films/api/comments/' + localStorage.getItem('film_id'))
+      .then(response => response.json())
+      .then(data => {
+        let result = data;
+        setComments(result);
+      })
+  }
+
+  let postComment = async () => {
+    let response = await fetch('https://4947.ru/lucky_koban_films/api/comments/' + localStorage.getItem('film_id'),
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token'),
+        },
+        body: JSON.stringify({
+          content: commentText,
+          rating: commentRating,
+        })
+      });
+    if (response.status === 200) {
+      let data = await response.json();
+      localStorage.setItem("token", data.token)
+      window.location.reload()
+    }
   }
 
   return (
@@ -58,8 +93,6 @@ const Film = () => {
                     <p className="FilmPage__general-content__descr">{film.description}</p>
                     <ui className="FilmPage__general-content__list">
                       <li className="FilmPage__general-content__list-item">{String(film.release_date).split('-')[2]}.{String(film.release_date).split('-')[1]}.{String(film.release_date).split('-')[0]} |</li>
-                      {/* <li className="FilmPage__general-content__list-item"> 1ч 20мин |</li>
-                      <li className="FilmPage__general-content__list-item"> США |</li> */}
                       <li className="FilmPage__general-content__list-item"> {film.genres.map((item1) => {
                         return (
                           <>
@@ -88,31 +121,6 @@ const Film = () => {
                           </a>
                         )
                       })}
-                      {/* <a className="FilmPage__other-actors__list-item">
-                        Кэри Маллиган
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Брайан Крэнстон
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Альберт Брукс
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Оскар Айзек
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Кристина Хендрикс
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Рон Перлман
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Расс Тэмблин
-                      </a>
-                      <a className="FilmPage__other-actors__list-item">
-                        Джефф Вульф
-                      </a> */}
-
                     </Slider>
                   </div>
                 </div>
@@ -124,8 +132,8 @@ const Film = () => {
                       <div className="FilmPage__other-genres">
                         <h6 className="FilmPage__other-dop__tile">Жанры: </h6>
                         <ul className="FilmPage__other-details__list">
-                          {film.genres.map((item)=>{
-                            return(
+                          {film.genres.map((item) => {
+                            return (
                               <li className="FilmPage__other-details__list-item">{item.name}</li>
                             )
                           })}
@@ -134,6 +142,47 @@ const Film = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="FilmPage__other-box">
+                  <div className="container">
+                    <h5 className="FilmPage__other-title">Отзывы</h5>
+                    {localStorage.getItem('role') ? (
+                      <form className="FilmPage__comments-list__item FilmPage__writeComment" onSubmit={handleSubmit(postComment)}>
+                        <div className="FilmPage__writeComment-top">
+                          <p className="FilmPage__comments-alert">Оценка: </p>
+                          <select className='FilmPage__comments-list__item-ratebox' onChange={e=>setCommentRating(parseInt(e.target.value))}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                          </select>
+                          {cardStarSvg()}
+                        </div>
+                        <textarea cols="30" rows="10" className="FilmPage__writeComment-textarea" placeholder='Введите текст отзыва...' onChange={e=>setCommentText(e.target.value)}>
+                        </textarea>
+                        <button className="loginPage__btn btn-anim FilmPage__comments-btn" type='submit'>Опубликовать отзыв</button>
+                      </form>
+                    ) : (<p className="FilmPage__comments-alert">Войдите в систему, чтобы оставлять отзывы</p>)}
+                    <div className="FilmPage__comments-list">
+                      {comments.map((item) => {
+                        return (
+                          <div className="FilmPage__comments-list__item">
+                            <div className="FilmPage__comments-list__item-topbox">
+                              <h3 className="FilmPage__comments-list__item-title">{item.user.username}</h3>
+                              <p className="FilmPage__comments-list__item-role">{item.user.user_role === 'user' ? ('Пользователь') : (item.user.user_role === 'moderator' ? ('Модератор') : ('Админ'))}</p>
+                            </div>
+                            <p className="FilmPage__comments-list__item-rating">{item.rating} {cardStarSvg()}</p>
+                            {item.content ? (
+                              <p className="FilmPage__comments-list__item-text">{item.content}</p>
+                            ) : ('')}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </section>
           </Layout>

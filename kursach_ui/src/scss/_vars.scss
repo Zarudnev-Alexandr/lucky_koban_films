@@ -14,3 +14,136 @@ $bg-color-2: #122840;
     background-size: 100% 2px;
   }
 }
+
+.btn-anim {
+  background: linear-gradient(270deg, #122840, #001424);
+  background-size: 400% 400%;
+
+  -webkit-animation: btnAnimation 30s ease infinite;
+  -moz-animation: btnAnimation 30s ease infinite;
+  -o-animation: btnAnimation 30s ease infinite;
+  animation: btnAnimation 30s ease infinite;
+}
+
+@-webkit-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-o-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+
+.btn-anim:hover {
+  background: linear-gradient(90deg, #122840, #001424);
+  background-size: 400% 400%;
+
+  -webkit-animation: btnAnimation 2s ease infinite;
+  -moz-animation: btnAnimation 2s ease infinite;
+  -o-animation: btnAnimation 2s ease infinite;
+  animation: btnAnimation 2s ease infinite;
+}
+
+@-webkit-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-o-keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes btnAnimation {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
